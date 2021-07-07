@@ -1,5 +1,7 @@
 package com.ds.hackathan.hackathan.controller;
 
+import java.util.List;
+
 import com.ds.hackathan.hackathan.entity.DSNetwork;
 import com.ds.hackathan.hackathan.services.DSNetworkService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,25 +22,31 @@ public class DSNetworkController {
 	private DSNetworkService dsNetworkService;
 
 	@PostMapping("/create")
-	public DSNetwork createStudent(@RequestBody DSNetwork student) {
+	public DSNetwork createServer(@RequestBody DSNetwork student) {
 		DSNetwork createResponse = dsNetworkService.save(student);
 		return createResponse;
 	}
 
 	@PutMapping("/update")
-	public DSNetwork updateStudent(@RequestBody DSNetwork student) {
+	public DSNetwork updateServer(@RequestBody DSNetwork student) {
 		DSNetwork updateResponse = dsNetworkService.update(student);
 		return updateResponse;
 	}
 
 	@GetMapping("/{id}")
-	public DSNetwork getStudent(@PathVariable int id) {
+	public DSNetwork getServer(@PathVariable int id) {
 		DSNetwork getReponse = dsNetworkService.get(id);
 		return getReponse;
 	}
 
+	@GetMapping("/getall")
+	public List<DSNetwork> getServers() {
+		List<DSNetwork> getReponse = dsNetworkService.getAll();
+		return getReponse;
+	}
+
 	@DeleteMapping("/delete")
-	public String deleteStudent(@RequestBody DSNetwork student) {
+	public String deleteServer(@RequestBody DSNetwork student) {
 		dsNetworkService.delete(student);
 		return "Record deleted succesfully";
 	}

@@ -10,6 +10,8 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -37,6 +39,19 @@ public class DSNetworkServiceImpl implements DSNetworkService {
 			throw new RuntimeException("Record not found");
 		}
 		return network;
+	}
+
+	@Transactional
+	@Cacheable(value = "network", key = "#id")
+	public List<DSNetwork> getAll() {
+		List<DSNetwork> responseList = new ArrayList<>();
+		Iterable<DSNetwork> networkResponse = networkRepository.findAll();
+		if (networkResponse != null) {
+			networkResponse.forEach(responseList::add);
+		} else {
+			throw new RuntimeException("Record not found");
+		}
+		return responseList;
 	}
 
 	@Transactional
